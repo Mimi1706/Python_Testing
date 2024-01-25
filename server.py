@@ -45,9 +45,16 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+    club_points = int(club["points"])
     placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    flash('Great-booking complete!')
+
+    if club_points < placesRequired: # check if the number of placesRequired does not exceed point balance
+        flash("Your point balance is not enough.")
+        return render_template('welcome.html', club=club, competitions=competitions)
+
+    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
+    club["points"] = int(club["points"]) - placesRequired # update points number after booking placesRequired
+    flash('Great, booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
