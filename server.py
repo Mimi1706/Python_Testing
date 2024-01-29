@@ -50,6 +50,13 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     club_points = int(club["points"])
     placesRequired = int(request.form['places'])
+
+    maxPlacesAllowed = 12
+    maxPlacesAllowedMsg = f"You cannot book more than {maxPlacesAllowed} places."
+
+    if placesRequired > maxPlacesAllowed:
+        return render_template('booking.html',club=club,competition=competition, maxPlacesAllowedMsg=maxPlacesAllowedMsg)
+    
     competitionPlaces = int(competition['numberOfPlaces'])
 
     if club_points < placesRequired: # check if the number of placesRequired does not exceed point balance
@@ -68,9 +75,7 @@ def purchasePlaces():
     flash('Great, booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
 
-
 # TODO: Add route for points display
-
 
 @app.route('/logout')
 def logout():
