@@ -65,3 +65,10 @@ class TestPurchasePlaces:
 
         assert response.status_code == 200
         assert b"You cannot book more than" in response.data
+        
+class TestOutdatedCompetition:
+    def test_outdated_competition(self, client, clubs):
+        club=clubs[0]
+        response = client.post('/showSummary', data={"email": club["email"]})
+        assert f'href="/book/Spring%20Festival' not in response.data.decode() # outdated competition
+        assert f'href="/book/Fall%20Classic' in response.data.decode() # upcoming competition

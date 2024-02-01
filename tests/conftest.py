@@ -37,7 +37,7 @@ def competitions():
         },
         {
             "name": "Fall Classic",
-            "date": "2020-10-22 13:30:00",
+            "date": "2024-10-22 13:30:00",
             "numberOfPlaces": "13"
         }
     ]

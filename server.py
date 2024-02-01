@@ -32,7 +32,6 @@ def showSummary():
         for comp in competitions:
             if isinstance(comp['date'], str): # check that the type of comp['date'] is a string and not a date
                 comp['date'] = datetime.strptime(comp['date'], '%Y-%m-%d %H:%M:%S')
-
         return render_template("welcome.html", club=club[0], competitions=competitions, current_date=current_date)
     else:
         return render_template("index.html", error="Email not found.")
@@ -44,7 +43,7 @@ def book(competition,club):
     if foundClub and foundCompetition:
         return render_template('booking.html',club=foundClub,competition=foundCompetition)
     else:
-        flash("Something went wrong-please try again")
+        flash("Something went wrong, please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
 
 
