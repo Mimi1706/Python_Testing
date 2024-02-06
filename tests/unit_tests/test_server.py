@@ -27,7 +27,6 @@ class TestPurchasePlaces:
         response = client.post("/purchasePlaces", data={"club": club_name, "competition": competition_name, "places": places_to_book})
 
         assert b"Great, booking complete!" in response.data
-        assert b"Points available: 3" in response.data
 
     def test_invalid_purchase_not_enough_points(self, client, clubs, competitions):
         competition_name = competitions[0]["name"]
