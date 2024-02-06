@@ -55,3 +55,13 @@ class TestPurchasePlaces:
         response = client.post("/purchasePlaces", data={"club": club_name, "competition": competition_name, "places": places_to_book})
 
         assert b"Incorrect value." in response.data
+
+    def test_booking_over_limit(self, client, clubs, competitions):
+        competition = competitions[0]["name"]
+        club = clubs[0]["name"]
+        places_to_book = 13
+
+        response = client.post("/purchasePlaces", data={"club": club, "competition": competition, "places": places_to_book})
+
+        assert response.status_code == 200
+        assert b"You cannot book more than" in response.data
