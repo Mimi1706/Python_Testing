@@ -22,7 +22,7 @@
         {{comp['name']}}<br />
         Date: {{comp['date']}}<br />
 
-        {% if comp['date'] >= current_date %}
+        {% if comp['date']|string_to_date > current_date %}
         <span
           >Number of Places: {{comp['numberOfPlaces']}} {%if
           comp['numberOfPlaces']|int >0%}
