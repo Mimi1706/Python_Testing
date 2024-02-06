@@ -72,6 +72,7 @@ def purchasePlaces():
         flash('Incorrect value.')
         return render_template('welcome.html', club=club, competitions=competitions,current_date=current_date)
 
+    club["points"] = int(club["points"]) - placesRequired # update points number after booking placesRequired
     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
     flash('Great, booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions, current_date=current_date)
