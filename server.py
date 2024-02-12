@@ -29,6 +29,10 @@ def string_to_date(value):
 def index():
     return render_template('index.html')
 
+@app.route('/pointBoard', methods=['GET'])
+def showPointBoard():
+    return render_template("point-board.html", clubs=clubs)
+
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
     club = [club for club in clubs if club['email'] == request.form['email']] # will raise an IndexError: list index out of range if we try to access the [0] index in an empty club list
