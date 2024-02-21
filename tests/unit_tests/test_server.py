@@ -1,7 +1,5 @@
-import pytest
 import server
 
-@pytest.mark.usefixtures("client", "clubs", "competitions")
 class TestShowSummary:
     def test_show_summary_valid_email(self, client):
         response = client.post("/showSummary", data={"email": "john@simplylift.co"})
@@ -20,7 +18,6 @@ class TestShowSummary:
         assert f'href="/book/Spring%20Festival' in response.data.decode() # upcoming competition
         assert f'href="/book/Fall%20Classic' in response.data.decode() # upcoming competition
 
-@pytest.mark.usefixtures("client", "clubs", "competitions")
 class TestPurchasePlaces:
     def test_valid_purchase(self, client, clubs, competitions):
         competition_name = competitions[1]["name"] # competition 2 has 13 places
