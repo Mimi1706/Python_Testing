@@ -20,12 +20,12 @@ class TestShowSummary:
 
 class TestPurchasePlaces:
     def test_valid_purchase(self, client, clubs, competitions):
-        competition_name = competitions[1]["name"] # competition 2 has 13 places
+        competition_name = competitions[0]["name"] # competition 1 has 25 places
         club_name = clubs[0]["name"] # club 1 only has 13 balance points
         places_to_book = 10
         response = client.post("/purchasePlaces", data={"club": club_name, "competition": competition_name, "places": places_to_book})
         assert b"Great, booking complete!" in response.data
-        assert b"Number of Places: 3" in response.data
+        assert b"Number of Places: 15" in response.data
 
     def test_invalid_purchase_not_enough_points(self, client, clubs, competitions):
         competition_name = competitions[0]["name"]

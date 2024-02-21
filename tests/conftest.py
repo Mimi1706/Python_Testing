@@ -1,4 +1,5 @@
 import pytest
+import server
 from server import app
 
 @pytest.fixture
@@ -7,7 +8,7 @@ def client():
     return app.test_client()
     
 @pytest.fixture
-def clubs():
+def clubs(monkeypatch):
     clubs = [
         {
             "name":"Simply Lift",
@@ -24,11 +25,12 @@ def clubs():
             "points":"12"
         }
     ]
-    
+
+    monkeypatch.setattr(server, "clubs", clubs)
     return clubs
 
 @pytest.fixture
-def competitions():
+def competitions(monkeypatch):
     competitions = [
         {
             "name": "Spring Festival",
@@ -38,7 +40,7 @@ def competitions():
         {
             "name": "Fall Classic",
             "date": "2024-10-22 13:30:00",
-            "numberOfPlaces": "13"
+            "numberOfPlaces": "2"
         },
         {
             "name": "Past Festival",
@@ -47,4 +49,5 @@ def competitions():
         },
     ]
     
+    monkeypatch.setattr(server, "competitions", competitions)
     return competitions
