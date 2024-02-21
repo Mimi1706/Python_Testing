@@ -3,4 +3,7 @@ include
 lib
 .Python
 .envrc
+/env
+/.pytest_cache
 __pycache__
+/htmlcov

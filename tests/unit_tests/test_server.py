@@ -1,5 +1,15 @@
 import server
 
+def test_index(client):
+    response = client.get("/")
+    assert b"Please enter your secretary email to continue" in response.data 
+
+def test_logout(client):
+    response = client.post("/showSummary", data={"email": "john@simplylift.co"})
+    assert response.status_code == 200
+    response_logout = client.get("/logout")
+    assert response_logout.status_code == 302 #redirected http code
+
 class TestShowSummary:
     def test_show_summary_valid_email(self, client):
         response = client.post("/showSummary", data={"email": "john@simplylift.co"})
@@ -17,6 +27,15 @@ class TestShowSummary:
         assert f'href="/book/Past%20Festival' not in response.data.decode() # outdated competition
         assert f'href="/book/Spring%20Festival' in response.data.decode() # upcoming competition
         assert f'href="/book/Fall%20Classic' in response.data.decode() # upcoming competition
+
+class TestBook:
+    def test_valid_booking(self, client):
+        response = client.get("/book/Fall Classic/Simply Lift")
+        assert b"How many places?" in response.data
+
+    def test_invalid_booking(self, client):
+        response = client.get("/book/Winter Competition/Simply Lift")
+        assert b"Something went wrong, please try again" in response.data
 
 class TestPurchasePlaces:
     def test_valid_purchase(self, client, clubs, competitions):
